@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="theme_entries">
+        <item>System default</item>
+        <item>Dark</item>
+        <item>Light</item>
+    </string-array>
+    <string-array name="theme_values">
+        <item>system</item>
+        <item>dark</item>
+        <item>light</item>
+    </string-array>
+
+    <string-array name="intensity_entries">
+        <item>Small (~50 paths)</item>
+        <item>Medium (~90 paths)</item>
+    </string-array>
+    <string-array name="intensity_values">
+        <item>small</item>
+        <item>medium</item>
+    </string-array>
+</resources>

@@ -1,0 +1,88 @@
+<resources>
+    <string name="app_name">WebRecon</string>
+
+    <!-- Bottom nav -->
+    <string name="nav_recon">Recon</string>
+    <string name="nav_tools">Tools</string>
+    <string name="nav_history">History</string>
+
+    <!-- Overflow menu -->
+    <string name="menu_settings">Settings</string>
+    <string name="menu_share">Share</string>
+
+    <!-- Recon fragment -->
+    <string name="hint_domain">Enter domain (e.g. example.com)</string>
+    <string name="btn_run_recon">Run Recon</string>
+    <string name="label_recent">Recent engagements</string>
+
+    <!-- Tools -->
+    <string name="tool_jwt">JWT Inspector</string>
+    <string name="tool_http">HTTP Inspector</string>
+    <string name="tool_encoder">Encoder / Decoder</string>
+    <string name="tool_hash">Hash Lab</string>
+
+    <!-- JWT fragment -->
+    <string name="hint_jwt_token">Paste JWT token here…</string>
+    <string name="btn_decode">Decode</string>
+    <string name="label_header">Header</string>
+    <string name="label_payload">Payload</string>
+    <string name="label_issues">Issues</string>
+    <string name="no_issues">No issues detected.</string>
+
+    <!-- Encoder fragment -->
+    <string name="hint_encoder_input">Input text…</string>
+    <string name="btn_encode">Encode</string>
+    <string name="btn_decode_action">Decode</string>
+    <string name="btn_auto_detect">Auto-detect &amp; Decode</string>
+
+    <!-- Hash fragment -->
+    <string name="hint_hash_input">Text to hash…</string>
+    <string name="btn_hash">Hash</string>
+    <string name="btn_identify">Identify Hash</string>
+    <string name="btn_check_hibp">Check HIBP</string>
+    <string name="label_hash_result">Hash result</string>
+    <string name="label_hash_id">Identified as</string>
+    <string name="label_hibp_result">HIBP result</string>
+    <string name="hibp_pwned">Pwned %1$d times!</string>
+    <string name="hibp_safe">Not found in breaches.</string>
+    <string name="hibp_disabled">HIBP check disabled in settings.</string>
+
+    <!-- HTTP Inspector fragment -->
+    <string name="hint_url">https://…</string>
+    <string name="hint_headers">Extra headers (one per line: Key: Value)</string>
+    <string name="hint_body">Request body…</string>
+    <string name="btn_send">Send</string>
+    <string name="btn_open_browser">Open in Browser</string>
+    <string name="label_status">Status</string>
+    <string name="label_timing">Timing</string>
+    <string name="label_response_headers">Response Headers</string>
+    <string name="label_response_body">Response Body</string>
+    <string name="label_security_grade">Security Headers Grade</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="pref_theme_title">Theme</string>
+    <string name="pref_timeout_title">Request timeout (seconds)</string>
+    <string name="pref_user_agent_title">User-Agent</string>
+    <string name="pref_hibp_title">Enable HIBP check</string>
+    <string name="pref_recon_intensity_title">Recon intensity</string>
+
+    <!-- History -->
+    <string name="hint_search">Search history…</string>
+    <string name="history_empty">No history yet.</string>
+
+    <!-- Engagement -->
+    <string name="label_findings">Findings</string>
+    <string name="engagement_running">Scanning…</string>
+    <string name="engagement_done">Scan complete</string>
+    <string name="engagement_failed">Scan failed</string>
+
+    <!-- Severity labels -->
+    <string name="sev_info">INFO</string>
+    <string name="sev_warn">WARN</string>
+    <string name="sev_crit">CRIT</string>
+
+    <!-- Share -->
+    <string name="share_via">Share via</string>
+    <string name="share_report_title">Engagement Report</string>
+</resources>

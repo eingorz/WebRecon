@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.WebRecon" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/hacker_green</item>
+        <item name="colorPrimaryVariant">@color/hacker_green_dark</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorSecondary">@color/hacker_green_dark</item>
+        <item name="colorOnSecondary">@color/black</item>
+    </style>
+
+    <style name="Theme.WebRecon" parent="Base.Theme.WebRecon" />
+
+    <style name="TextAppearance.App.Mono" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Brand palette -->
+    <color name="hacker_green">#00E676</color>
+    <color name="hacker_green_dark">#00B248</color>
+    <color name="surface_dark">#0D1117</color>
+    <color name="surface_card">#161B22</color>
+    <color name="on_surface">#C9D1D9</color>
+    <color name="outline_subtle">#21262D</color>
+
+    <!-- Severity -->
+    <color name="sev_info">#58A6FF</color>
+    <color name="sev_warn">#E3B341</color>
+    <color name="sev_crit">#F85149</color>
+</resources>
