@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.WebRecon.R;
+import com.example.WebRecon.ToolActivity;
 import com.example.WebRecon.databinding.FragmentHttpInspectorBinding;
 import com.example.WebRecon.db.AppDatabase;
 import com.example.WebRecon.db.ToolType;
@@ -105,6 +106,35 @@ public class HttpInspectorFragment extends Fragment {
         binding.btnSend.setOnClickListener(v -> sendRequest());
         binding.btnOpenBrowser.setOnClickListener(v -> openInBrowser());
         binding.btnShareResponse.setOnClickListener(v -> shareResponse());
+
+        if (savedInstanceState == null) {
+            long opId = getArguments() != null
+                ? getArguments().getLong(ToolActivity.EXTRA_OPERATION_ID, -1L) : -1L;
+            if (opId > 0) loadFromHistory(opId);
+        }
+    }
+
+    private void loadFromHistory(long operationId) {
+        executor.submit(() -> {
+            ToolOperation op = AppDatabase.getInstance(requireContext())
+                .toolOperationDao().getByIdSync(operationId);
+            if (op == null || getActivity() == null) return;
+            String output = op.output != null ? op.output : "";
+            int newline = output.indexOf('\n');
+            String status = newline > 0 ? output.substring(0, newline) : output;
+            String headers = newline > 0 ? output.substring(newline + 1) : "";
+            mainHandler.post(() -> {
+                if (binding == null) return;
+                binding.etUrl.setText(op.input != null ? op.input : "");
+                lastUrl = op.input != null ? op.input : "";
+                lastStatus = status;
+                lastRespHeaders = headers;
+                lastRespBody = "";
+                lastTiming = "";
+                lastGrade = "";
+                restoreResponse();
+            });
+        });
     }
 
     private void sendRequest() {

@@ -17,6 +17,7 @@ import com.example.WebRecon.recon.step.CrtShStep;
 import com.example.WebRecon.recon.step.DnsStep;
 import com.example.WebRecon.recon.step.HeadersAuditor;
 import com.example.WebRecon.recon.step.RobotsTxtStep;
+import com.example.WebRecon.recon.step.PortScanStep;
 import com.example.WebRecon.recon.step.SensitivePathsStep;
 import com.example.WebRecon.recon.step.TechFingerprintStep;
 import com.example.WebRecon.util.WordlistManager;
@@ -74,9 +75,11 @@ public class ReconEngine implements Runnable {
             // Include apex
             if (!allSubdomains.contains(domain)) allSubdomains.add(0, domain);
 
+            String crtMsg = crtSubdomains.isEmpty()
+                ? "crt.sh returned no results (API may be unavailable)"
+                : "crt.sh found " + crtSubdomains.size() + " certificate entries";
             Finding crtFinding = new Finding(engagementId, FindingType.SUBDOMAIN, Severity.INFO,
-                "crt.sh found " + crtSubdomains.size() + " certificate entries",
-                "Total unique subdomains to probe: " + allSubdomains.size());
+                crtMsg, "Total unique subdomains to probe: " + allSubdomains.size());
             insertFinding(crtFinding);
 
             // Stage 2: DNS
@@ -132,12 +135,23 @@ public class ReconEngine implements Runnable {
 
             // Stage 6: Sensitive paths
             postProgress(new ReconProgress(ReconProgress.Stage.PATHS,
-                "Probing sensitive paths…", 80));
+                "Probing sensitive paths…", 83));
             List<Finding> pathFindings = SensitivePathsStep.check(context, domain, engagementId);
             for (Finding f : pathFindings) insertFinding(f);
             if (pathFindings.isEmpty()) {
                 Finding f = new Finding(engagementId, FindingType.PATH, Severity.INFO,
                     "No sensitive paths found", "All probed paths returned non-flagged status codes");
+                insertFinding(f);
+            }
+
+            // Stage 7: Port scan
+            postProgress(new ReconProgress(ReconProgress.Stage.PORT_SCAN,
+                "Scanning common ports…", 92));
+            List<Finding> portFindings = PortScanStep.scan(domain, engagementId);
+            for (Finding f : portFindings) insertFinding(f);
+            if (portFindings.isEmpty()) {
+                Finding f = new Finding(engagementId, FindingType.PORT, Severity.INFO,
+                    "No common ports open", "All probed ports were closed or filtered");
                 insertFinding(f);
             }
 

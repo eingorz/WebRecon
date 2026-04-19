@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.WebRecon.R;
+import com.example.WebRecon.db.AppDatabase;
 import com.example.WebRecon.db.entity.Engagement;
 import com.example.WebRecon.db.entity.ToolOperation;
 
@@ -17,11 +18,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_ENGAGEMENT = 0;
     private static final int TYPE_OPERATION = 1;
+
+    private static final Executor dbExecutor = Executors.newCachedThreadPool();
 
     public interface EngagementClick { void onClick(Engagement e); }
     public interface OperationClick { void onClick(ToolOperation op); }
@@ -95,6 +101,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             h.tvDate.setText(fmt.format(new Date(e.startedAt)));
             h.tvStatus.setText(e.status != null ? e.status.name() : "");
             h.tvFindingCount.setText("");
+            h.tvFindingCount.setTag(e.id);
+            dbExecutor.execute(() -> {
+                int count = AppDatabase.getInstance(h.itemView.getContext())
+                    .engagementDao().getFindingCount(e.id);
+                h.itemView.post(() -> {
+                    if (Objects.equals(h.tvFindingCount.getTag(), e.id))
+                        h.tvFindingCount.setText(count + " findings");
+                });
+            });
             h.itemView.setOnClickListener(v -> engagementClick.onClick(e));
         } else if (holder instanceof OperationVH) {
             ToolOperation op = (ToolOperation) item;

@@ -3,7 +3,7 @@ package com.example.WebRecon.recon.model;
 public class ReconProgress {
 
     public enum Stage {
-        CRTSH, DNS, TECH, HEADERS, ROBOTS, PATHS, DONE, ERROR
+        CRTSH, DNS, TECH, HEADERS, ROBOTS, PATHS, PORT_SCAN, DONE, ERROR
     }
 
     public Stage stage;

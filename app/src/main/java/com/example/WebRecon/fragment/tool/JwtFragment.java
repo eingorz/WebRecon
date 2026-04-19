@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.WebRecon.R;
+import com.example.WebRecon.ToolActivity;
 import com.example.WebRecon.databinding.FragmentJwtBinding;
 import com.example.WebRecon.db.AppDatabase;
 import com.example.WebRecon.db.ToolType;
@@ -60,6 +61,33 @@ public class JwtFragment extends Fragment {
         binding.btnDecode.setOnClickListener(v -> decodeToken());
         binding.btnCheckSecrets.setOnClickListener(v -> checkSecrets());
         binding.btnShare.setOnClickListener(v -> shareResult());
+
+        if (savedInstanceState == null) {
+            long opId = getArguments() != null
+                ? getArguments().getLong(ToolActivity.EXTRA_OPERATION_ID, -1L) : -1L;
+            if (opId > 0) loadFromHistory(opId);
+        }
+    }
+
+    private void loadFromHistory(long operationId) {
+        executor.submit(() -> {
+            ToolOperation op = AppDatabase.getInstance(requireContext())
+                .toolOperationDao().getByIdSync(operationId);
+            if (op == null || op.input == null || getActivity() == null) return;
+            JwtTool.JwtDecodeResult result = JwtTool.decode(op.input);
+            requireActivity().runOnUiThread(() -> {
+                if (binding == null) return;
+                binding.etToken.setText(op.input);
+                if (result.success) {
+                    lastHeader = result.headerJson;
+                    lastPayload = result.payloadJson;
+                    lastIssues = TextUtils.isEmpty(result.issues.toString())
+                        ? getString(R.string.no_issues)
+                        : android.text.TextUtils.join("\n", result.issues);
+                    restoreOutput();
+                }
+            });
+        });
     }
 
     private void decodeToken() {

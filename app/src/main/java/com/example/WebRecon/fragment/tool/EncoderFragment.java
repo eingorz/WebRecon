@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.WebRecon.R;
+import com.example.WebRecon.ToolActivity;
 import com.example.WebRecon.databinding.FragmentEncoderBinding;
 import com.example.WebRecon.db.AppDatabase;
 import com.example.WebRecon.db.ToolType;
@@ -66,6 +67,25 @@ public class EncoderFragment extends Fragment {
         binding.btnAutoDetect.setOnClickListener(v -> autoDetect());
         binding.btnCopy.setOnClickListener(v -> copyOutput());
         binding.btnShare.setOnClickListener(v -> shareOutput());
+
+        if (savedInstanceState == null) {
+            long opId = getArguments() != null
+                ? getArguments().getLong(ToolActivity.EXTRA_OPERATION_ID, -1L) : -1L;
+            if (opId > 0) loadFromHistory(opId);
+        }
+    }
+
+    private void loadFromHistory(long operationId) {
+        executor.submit(() -> {
+            ToolOperation op = AppDatabase.getInstance(requireContext())
+                .toolOperationDao().getByIdSync(operationId);
+            if (op == null || getActivity() == null) return;
+            requireActivity().runOnUiThread(() -> {
+                if (binding == null) return;
+                binding.etInput.setText(op.input != null ? op.input : "");
+                if (op.output != null && !op.output.isEmpty()) showOutput(op.output);
+            });
+        });
     }
 
     private void performAction(boolean encode) {

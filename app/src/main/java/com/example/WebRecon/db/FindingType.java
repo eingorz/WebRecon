@@ -6,5 +6,6 @@ public enum FindingType {
     TECH,
     HEADER,
     PATH,
-    ROBOTS
+    ROBOTS,
+    PORT
 }

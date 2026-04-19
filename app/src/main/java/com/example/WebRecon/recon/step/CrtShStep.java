@@ -27,7 +27,7 @@ public class CrtShStep {
             .readTimeout(TIMEOUT_SEC, TimeUnit.SECONDS)
             .build();
 
-        String url = "https://crt.sh/?q=" + domain + "&output=json";
+        String url = "https://crt.sh/?q=%25." + domain + "&output=json";
         Request req = new Request.Builder().url(url).build();
 
         for (int attempt = 0; attempt < 2; attempt++) {

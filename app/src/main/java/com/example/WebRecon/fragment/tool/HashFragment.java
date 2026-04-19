@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.WebRecon.ToolActivity;
 import com.example.WebRecon.databinding.FragmentHashBinding;
 import com.example.WebRecon.db.AppDatabase;
 import com.example.WebRecon.db.ToolType;
@@ -69,6 +70,28 @@ public class HashFragment extends Fragment {
         binding.btnHash.setOnClickListener(v -> computeHash());
         binding.btnIdentify.setOnClickListener(v -> identifyHash());
         binding.btnHibp.setOnClickListener(v -> checkHibp());
+
+        if (savedInstanceState == null) {
+            long opId = getArguments() != null
+                ? getArguments().getLong(ToolActivity.EXTRA_OPERATION_ID, -1L) : -1L;
+            if (opId > 0) loadFromHistory(opId);
+        }
+    }
+
+    private void loadFromHistory(long operationId) {
+        executor.submit(() -> {
+            ToolOperation op = AppDatabase.getInstance(requireContext())
+                .toolOperationDao().getByIdSync(operationId);
+            if (op == null || getActivity() == null) return;
+            mainHandler.post(() -> {
+                if (binding == null) return;
+                binding.etInput.setText(op.input != null ? op.input : "");
+                if (op.output != null && !op.output.isEmpty()) {
+                    lastHash = op.output;
+                    restoreOutput();
+                }
+            });
+        });
     }
 
     private String getSelectedAlgo() {

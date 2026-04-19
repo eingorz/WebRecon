@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.WebRecon.R;
+import com.example.WebRecon.db.AppDatabase;
 import com.example.WebRecon.db.entity.Engagement;
 
 import java.text.SimpleDateFormat;
@@ -16,12 +17,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class EngagementAdapter extends RecyclerView.Adapter<EngagementAdapter.VH> {
 
     public interface ClickListener {
         void onClick(Engagement engagement);
     }
+
+    private static final Executor dbExecutor = Executors.newCachedThreadPool();
 
     private List<Engagement> items = new ArrayList<>();
     private final ClickListener listener;
@@ -51,6 +57,15 @@ public class EngagementAdapter extends RecyclerView.Adapter<EngagementAdapter.VH
         h.tvDate.setText(fmt.format(new Date(e.startedAt)));
         h.tvStatus.setText(e.status != null ? e.status.name() : "");
         h.tvFindingCount.setText("");
+        h.tvFindingCount.setTag(e.id);
+        dbExecutor.execute(() -> {
+            int count = AppDatabase.getInstance(h.itemView.getContext())
+                .engagementDao().getFindingCount(e.id);
+            h.itemView.post(() -> {
+                if (Objects.equals(h.tvFindingCount.getTag(), e.id))
+                    h.tvFindingCount.setText(count + " findings");
+            });
+        });
         h.itemView.setOnClickListener(v -> listener.onClick(e));
     }
 
