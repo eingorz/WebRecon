@@ -1,5 +1,6 @@
 package com.example.WebRecon.adapter;
 
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,19 +68,28 @@ public class FindingAdapter extends RecyclerView.Adapter<FindingAdapter.VH> {
 
         int barColor;
         String badge;
+        int badgeTextColor;
         if (f.severity == Severity.CRIT) {
             barColor = 0xFFF85149;
             badge = "CRIT";
+            badgeTextColor = 0xFF000000;
         } else if (f.severity == Severity.WARN) {
             barColor = 0xFFE3B341;
             badge = "WARN";
+            badgeTextColor = 0xFF000000;
         } else {
             barColor = 0xFF58A6FF;
             badge = "INFO";
+            badgeTextColor = 0xFF000000;
         }
         h.severityBar.setBackgroundColor(barColor);
         h.tvSevBadge.setText(badge);
-        h.tvSevBadge.setBackgroundColor(barColor);
+        h.tvSevBadge.setTextColor(badgeTextColor);
+        float r = 4 * h.itemView.getContext().getResources().getDisplayMetrics().density;
+        GradientDrawable badgeBg = new GradientDrawable();
+        badgeBg.setColor(barColor);
+        badgeBg.setCornerRadius(r);
+        h.tvSevBadge.setBackground(badgeBg);
     }
 
     @Override

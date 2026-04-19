@@ -1,11 +1,17 @@
 package com.example.WebRecon.fragment;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +21,6 @@ import com.example.WebRecon.R;
 import com.example.WebRecon.ToolActivity;
 import com.example.WebRecon.databinding.FragmentToolsBinding;
 import com.google.android.material.card.MaterialCardView;
-import android.widget.TextView;
 
 public class ToolsFragment extends Fragment {
 
@@ -32,30 +37,78 @@ public class ToolsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        addToolCard("JWT Inspector", ToolActivity.TYPE_JWT);
-        addToolCard("HTTP Inspector", ToolActivity.TYPE_HTTP);
-        addToolCard("Encoder / Decoder", ToolActivity.TYPE_ENCODER);
-        addToolCard("Hash Lab", ToolActivity.TYPE_HASH);
+        addToolCard("[JWT]", "JWT Inspector", "Decode & audit\nJSON Web Tokens", ToolActivity.TYPE_JWT);
+        addToolCard("[HTTP]", "HTTP Inspector", "Send requests &\nanalyze headers", ToolActivity.TYPE_HTTP);
+        addToolCard("[ENC]", "Encoder / Decoder", "Base64, URL, HTML\nencoding tools", ToolActivity.TYPE_ENCODER);
+        addToolCard("[HSH]", "Hash Lab", "Generate & identify\nhash digests", ToolActivity.TYPE_HASH);
     }
 
-    private void addToolCard(String label, String toolType) {
+    private void addToolCard(String tag, String label, String desc, String toolType) {
+        float density = getResources().getDisplayMetrics().density;
+
         MaterialCardView card = new MaterialCardView(requireContext());
         GridLayout.LayoutParams params = new GridLayout.LayoutParams();
         params.width = 0;
         params.height = GridLayout.LayoutParams.WRAP_CONTENT;
         params.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1, 1f);
-        params.setMargins(8, 8, 8, 8);
+        int margin = (int) (8 * density);
+        params.setMargins(margin, margin, margin, margin);
         card.setLayoutParams(params);
-        card.setCardElevation(4f);
-        card.setRadius(12f);
-        card.setUseCompatPadding(true);
+        card.setCardElevation(0f);
+        card.setRadius(6 * density);
+        card.setUseCompatPadding(false);
+        card.setStrokeColor(getResources().getColor(R.color.outline_subtle, null));
+        card.setStrokeWidth((int) density);
+        card.setCardBackgroundColor(getResources().getColor(R.color.surface_card, null));
 
-        TextView tv = new TextView(requireContext());
-        tv.setText(label);
-        tv.setPadding(32, 48, 32, 48);
-        tv.setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_TitleMedium);
-        tv.setGravity(android.view.Gravity.CENTER);
-        card.addView(tv);
+        LinearLayout content = new LinearLayout(requireContext());
+        content.setOrientation(LinearLayout.VERTICAL);
+        int pad = (int) (14 * density);
+        content.setPadding(pad, pad, pad, pad);
+
+        TextView tvTag = new TextView(requireContext());
+        tvTag.setText(tag);
+        tvTag.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
+        tvTag.setTextSize(10f);
+        tvTag.setTextColor(getResources().getColor(R.color.hacker_green, null));
+        tvTag.setLetterSpacing(0.08f);
+
+        GradientDrawable tagBg = new GradientDrawable();
+        tagBg.setColor(Color.parseColor("#1A00E676"));
+        tagBg.setCornerRadius(3 * density);
+        tvTag.setBackground(tagBg);
+        int hPad = (int) (6 * density);
+        int vPad = (int) (2 * density);
+        tvTag.setPadding(hPad, vPad, hPad, vPad);
+
+        TextView tvLabel = new TextView(requireContext());
+        tvLabel.setText(label);
+        tvLabel.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
+        tvLabel.setTextSize(13f);
+        tvLabel.setTextColor(getResources().getColor(R.color.on_surface, null));
+        LinearLayout.LayoutParams labelParams = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        labelParams.topMargin = (int) (6 * density);
+        tvLabel.setLayoutParams(labelParams);
+
+        TextView tvDesc = new TextView(requireContext());
+        tvDesc.setText(desc);
+        tvDesc.setTypeface(Typeface.MONOSPACE);
+        tvDesc.setTextSize(11f);
+        tvDesc.setTextColor(getResources().getColor(R.color.on_surface_dim, null));
+        LinearLayout.LayoutParams descParams = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        descParams.topMargin = (int) (4 * density);
+        tvDesc.setLayoutParams(descParams);
+
+        content.addView(tvTag);
+        content.addView(tvLabel);
+        content.addView(tvDesc);
+        card.addView(content);
 
         card.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), ToolActivity.class);

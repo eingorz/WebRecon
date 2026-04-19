@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="false"
-        app:trackThickness="4dp"
+        app:trackThickness="3dp"
         android:progress="0"
         android:visibility="gone" />
 
@@ -24,10 +24,17 @@
         android:id="@+id/tv_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:textSize="12sp"
-        android:textColor="@color/on_surface"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="6dp"
+        android:textSize="11sp"
+        android:fontFamily="monospace"
+        android:textColor="@color/on_surface_dim"
         android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/outline_subtle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_findings"

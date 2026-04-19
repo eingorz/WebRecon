@@ -8,8 +8,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.drawable.GradientDrawable;
+
 import com.example.WebRecon.R;
 import com.example.WebRecon.db.AppDatabase;
+import com.example.WebRecon.db.EngagementStatus;
 import com.example.WebRecon.db.entity.Engagement;
 import com.example.WebRecon.db.entity.ToolOperation;
 
@@ -99,7 +102,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             EngagementVH h = (EngagementVH) holder;
             h.tvDomain.setText(e.domain);
             h.tvDate.setText(fmt.format(new Date(e.startedAt)));
-            h.tvStatus.setText(e.status != null ? e.status.name() : "");
+            applyEngagementStatus(h, e.status);
             h.tvFindingCount.setText("");
             h.tvFindingCount.setTag(e.id);
             dbExecutor.execute(() -> {
@@ -126,10 +129,31 @@ public class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return filteredItems.size();
     }
 
+    private static void applyEngagementStatus(EngagementVH h, EngagementStatus status) {
+        int color;
+        String label;
+        if (status == EngagementStatus.COMPLETED) {
+            color = 0xFF00E676; label = "DONE";
+        } else if (status == EngagementStatus.FAILED) {
+            color = 0xFFF85149; label = "FAIL";
+        } else {
+            color = 0xFFE3B341; label = "RUNNING";
+        }
+        h.statusBar.setBackgroundColor(color);
+        h.tvStatus.setText(label);
+        float r = 3 * h.itemView.getContext().getResources().getDisplayMetrics().density;
+        GradientDrawable bg = new GradientDrawable();
+        bg.setColor(color);
+        bg.setCornerRadius(r);
+        h.tvStatus.setBackground(bg);
+    }
+
     static class EngagementVH extends RecyclerView.ViewHolder {
+        View statusBar;
         TextView tvDomain, tvDate, tvStatus, tvFindingCount;
         EngagementVH(@NonNull View v) {
             super(v);
+            statusBar = v.findViewById(R.id.status_bar);
             tvDomain = v.findViewById(R.id.tv_domain);
             tvDate = v.findViewById(R.id.tv_date);
             tvStatus = v.findViewById(R.id.tv_status);

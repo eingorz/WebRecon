@@ -11,6 +11,9 @@
     <color name="on_surface">#C9D1D9</color>
     <color name="outline_subtle">#21262D</color>
 
+    <!-- Secondary text -->
+    <color name="on_surface_dim">#8B949E</color>
+
     <!-- Severity -->
     <color name="sev_info">#58A6FF</color>
     <color name="sev_warn">#E3B341</color>

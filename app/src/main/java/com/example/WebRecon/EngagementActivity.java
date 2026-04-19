@@ -52,8 +52,6 @@ public class EngagementActivity extends AppCompatActivity {
         adapter = new FindingAdapter();
         binding.rvFindings.setLayoutManager(new LinearLayoutManager(this));
         binding.rvFindings.setAdapter(adapter);
-        binding.rvFindings.addItemDecoration(
-            new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         if (savedInstanceState != null) {
             int scroll = savedInstanceState.getInt(KEY_SCROLL, 0);

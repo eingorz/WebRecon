@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
+        if (getSupportActionBar() != null) getSupportActionBar().setTitle("");
 
         WordlistManager.copyAssetsToInternalStorage(this);
 

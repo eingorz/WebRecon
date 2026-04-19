@@ -9,8 +9,57 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:title="@string/app_name" />
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingTop="16dp"
+        android:paddingBottom="4dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="&gt;_"
+                    android:fontFamily="monospace"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:textColor="@color/hacker_green"
+                    android:layout_marginEnd="6dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="WebRecon"
+                    android:fontFamily="monospace"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/on_surface"
+                    android:letterSpacing="0.03" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="// web reconnaissance toolkit"
+                android:fontFamily="monospace"
+                android:textSize="10sp"
+                android:textColor="@color/on_surface_dim"
+                android:letterSpacing="0.02" />
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <FrameLayout
         android:id="@+id/fragment_container"

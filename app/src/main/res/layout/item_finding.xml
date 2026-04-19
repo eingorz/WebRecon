@@ -1,78 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="0dp">
-
-    <!-- Severity left border -->
-    <View
-        android:id="@+id/severity_bar"
-        android:layout_width="4dp"
-        android:layout_height="match_parent" />
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/surface_card"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/outline_subtle"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/severity_bar"
+            android:layout_width="4dp"
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_sev_badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="7dp"
+                    android:paddingVertical="2dp"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="10sp"
+                    android:textColor="@color/on_surface_dim"
+                    android:textAllCaps="true"
+                    android:fontFamily="monospace" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:textColor="@color/hacker_green"
+                    android:fontFamily="monospace" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_sev_badge"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="6dp"
-                android:paddingEnd="6dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                android:background="@android:color/darker_gray"
-                android:textColor="@color/white"
-                android:layout_marginEnd="8dp" />
-
-            <TextView
-                android:id="@+id/tv_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
+                android:textSize="13sp"
                 android:textColor="@color/on_surface"
-                android:layout_marginEnd="8dp" />
-
-            <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
+                android:fontFamily="monospace"
+                android:layout_marginTop="5dp" />
 
             <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_detail"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:textColor="@color/on_surface" />
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                android:textColor="@color/on_surface_dim"
+                android:layout_marginTop="4dp"
+                android:visibility="gone" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_marginTop="4dp" />
-
-        <TextView
-            android:id="@+id/tv_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:fontFamily="monospace"
-            android:layout_marginTop="4dp"
-            android:visibility="gone" />
-
     </LinearLayout>
 
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

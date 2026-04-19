@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -11,37 +12,50 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Method + URL row -->
-        <LinearLayout
+        <!-- Method + URL -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            app:cardBackgroundColor="@color/surface_card"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/outline_subtle"
+            app:strokeWidth="1dp">
 
-            <Spinner
-                android:id="@+id/spinner_method"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="8dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/hint_url"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_url"
-                    android:layout_width="match_parent"
+                <Spinner
+                    android:id="@+id/spinner_method"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="textUri"
-                    android:maxLines="1"
-                    android:fontFamily="monospace"
-                    android:textSize="12sp" />
+                    android:layout_marginEnd="8dp" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/hint_url"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense">
 
-        </LinearLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_url"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textUri"
+                        android:maxLines="1"
+                        android:fontFamily="monospace"
+                        android:textSize="12sp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Extra headers -->
         <com.google.android.material.textfield.TextInputLayout
@@ -88,15 +102,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/btn_send" />
+            android:text="SEND REQUEST"
+            android:fontFamily="monospace"
+            android:letterSpacing="0.05" />
 
-        <!-- Response section -->
+        <!-- Response card -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_response"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:visibility="gone">
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/surface_card"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/outline_subtle"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -104,42 +125,75 @@
                 android:orientation="vertical"
                 android:padding="12dp">
 
+                <!-- Status row -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <View
+                        android:layout_width="3dp"
+                        android:layout_height="12dp"
+                        android:background="@color/hacker_green"
+                        android:layout_marginEnd="6dp" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/label_status"
-                        android:textAppearance="?attr/textAppearanceLabelMedium" />
+                        android:text="STATUS"
+                        android:fontFamily="monospace"
+                        android:textSize="10sp"
+                        android:textColor="@color/on_surface_dim"
+                        android:letterSpacing="0.1" />
 
                     <TextView
                         android:id="@+id/tv_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="monospace"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/hacker_green" />
 
                     <TextView
                         android:id="@+id/tv_timing"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="monospace"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
+                        android:textColor="@color/on_surface_dim"
                         android:layout_marginStart="12dp" />
 
                 </LinearLayout>
 
-                <TextView
+                <!-- Response headers section -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_response_headers"
-                    android:textAppearance="?attr/textAppearanceLabelMedium"
-                    android:layout_marginTop="8dp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="6dp">
+
+                    <View
+                        android:layout_width="3dp"
+                        android:layout_height="12dp"
+                        android:background="@color/sev_info"
+                        android:layout_marginEnd="6dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RESPONSE HEADERS"
+                        android:fontFamily="monospace"
+                        android:textSize="10sp"
+                        android:textColor="@color/on_surface_dim"
+                        android:letterSpacing="0.1" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_response_headers"
@@ -147,15 +201,34 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
                     android:textSize="11sp"
-                    android:textIsSelectable="true"
-                    android:layout_marginTop="4dp" />
+                    android:textColor="@color/on_surface"
+                    android:textIsSelectable="true" />
 
-                <TextView
+                <!-- Security grade section -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_security_grade"
-                    android:textAppearance="?attr/textAppearanceLabelMedium"
-                    android:layout_marginTop="8dp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="6dp">
+
+                    <View
+                        android:layout_width="3dp"
+                        android:layout_height="12dp"
+                        android:background="@color/sev_warn"
+                        android:layout_marginEnd="6dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SECURITY GRADE"
+                        android:fontFamily="monospace"
+                        android:textSize="10sp"
+                        android:textColor="@color/on_surface_dim"
+                        android:letterSpacing="0.1" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_grade"
@@ -163,14 +236,33 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
                     android:textSize="12sp"
-                    android:layout_marginTop="4dp" />
+                    android:textColor="@color/on_surface" />
 
-                <TextView
+                <!-- Body section -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_response_body"
-                    android:textAppearance="?attr/textAppearanceLabelMedium"
-                    android:layout_marginTop="8dp" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="6dp">
+
+                    <View
+                        android:layout_width="3dp"
+                        android:layout_height="12dp"
+                        android:background="@color/on_surface_dim"
+                        android:layout_marginEnd="6dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RESPONSE BODY"
+                        android:fontFamily="monospace"
+                        android:textSize="10sp"
+                        android:textColor="@color/on_surface_dim"
+                        android:letterSpacing="0.1" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_body"
@@ -178,8 +270,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
                     android:textSize="11sp"
-                    android:textIsSelectable="true"
-                    android:layout_marginTop="4dp" />
+                    android:textColor="@color/on_surface"
+                    android:textIsSelectable="true" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -192,7 +284,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/btn_open_browser"
+                        android:text="OPEN IN BROWSER"
+                        android:fontFamily="monospace"
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_marginEnd="4dp" />
 
@@ -201,7 +294,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Share"
+                        android:text="SHARE"
+                        android:fontFamily="monospace"
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_marginStart="4dp" />
 
