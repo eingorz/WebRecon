@@ -2,6 +2,8 @@
 
 A mobile web penetration testing companion for Android. Combines target reconnaissance with standalone security utilities, all stored in local history.
 
+Made for a school project and not intended for any actual long term use.
+
 ## What it does
 
 **Recon tab** — Enter any domain and run an automated pipeline: subdomain enumeration via certificate transparency (crt.sh) + common wordlist, DNS resolution of all discovered subdomains, technology fingerprinting, security headers audit (graded A–F), robots.txt / sitemap.xml analysis, and sensitive path probing (HEAD requests against ~90 common paths like `/.git/config`, `/.env`, `/admin`). Findings stream into the UI live as each stage completes, colour-coded by severity (INFO / WARN / CRIT). Results are persisted to SQLite and can be shared as a Markdown report.
