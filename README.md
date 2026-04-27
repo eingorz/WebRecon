@@ -42,28 +42,9 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 **Minimum Android version:** API 31 (Android 12).
 
 ---
-
-## Assignment requirement mapping
-
-| Requirement | Where it is satisfied |
-|---|---|
-| ≥3 Activities with proper lifecycle | `MainActivity`, `EngagementActivity`, `ToolActivity`, `SettingsActivity` — all 4 handle `onCreate`/`onDestroy` and background executor shutdown |
-| Bottom navigation | `BottomNavigationView` in `activity_main.xml`, wired in `MainActivity` |
-| Toolbar / ActionBar with title, up-navigation, overflow menu | `MaterialToolbar` in every activity; up-nav via `parentActivityName` + `setDisplayHomeAsUpEnabled`; overflow in `MainActivity` → Settings |
-| Full instance state preservation | Every fragment/activity saves text fields, spinner positions, scroll positions, and tab selection in `onSaveInstanceState` / restores in `onViewCreated` / `onCreate` |
-| SharedPreferences | `Prefs.java` + `SettingsActivity` / `SettingsFragment` — theme, timeout, user-agent, HIBP toggle, recon intensity |
-| Internal storage (wordlists) | `WordlistManager.copyAssetsToInternalStorage()` copies 3 `.txt` wordlists from `assets/` to `getFilesDir()` on first launch; all subsequent reads go through `getFilesDir()` |
-| SQLite via Room | `AppDatabase` with 3 entities (`Engagement`, `Finding`, `ToolOperation`), 3 DAOs, `TypeConverters` — `db/` package |
-| At least one implicit intent | (1) `ACTION_SEND` share in `EngagementActivity`; (2) `ACTION_SEND` share in `JwtFragment`; (3) `ACTION_VIEW` "Open in browser" in `HttpInspectorFragment`; (4) `ACTION_SEND` share in `HttpInspectorFragment` |
-| Online JSON data source | crt.sh (`CrtShStep`) returns JSON; HIBP range API (`HibpChecker`) — both accessed via OkHttp |
-| Custom colour theme | `colors.xml` (hacker green `#00E676`, severity palette); `themes.xml` overrides `colorPrimary`; dark-mode variant in `values-night/themes.xml` |
-
----
-
 ## Known limitations
 
 - **crt.sh latency** — the API can take 10–30 s or time out under load; the app retries once and degrades gracefully to DNS-only enumeration with the bundled wordlist.
 - **TLS validation** — OkHttp uses the system trust store; self-signed certs on target hosts will cause connection errors.
 - **Sensitive path scan** — uses HTTPS only; HTTP-only targets will fail silently per path.
 - **HIBP** — requires internet access; can be disabled in Settings.
-- **No signing config** — release builds are unsigned; use the debug APK for submission.
